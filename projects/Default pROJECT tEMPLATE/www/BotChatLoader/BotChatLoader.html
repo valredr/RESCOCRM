@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- Activate IE9 document mode, if available -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Defined iOS viewport -->
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="../JSBridge.js"></script>
+    <script type="text/javascript" src="../JSBridgeExtension.js"></script>
+    <script type="text/javascript" src="../Schema.js"></script>
+    <script type="text/javascript" src="../Common.js"></script>
+    <script type="text/javascript" src="../Telemetry.js"></script>
+    <script type="text/javascript" src="BotChatLoader.js"></script>
+    <script type="text/javascript" src="NativeOverrideForMapURLs.js"></script>
+    <link href="https://cdn.botframework.com/botframework-webchat/0.14.2/botchat.css" rel="stylesheet" />
+    <style>
+        #error {
+            text-align: center;
+            padding-top: 2%;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body onload="FS.BotChatLoader.onLoad()">
+    <div id="bot"/>
+    <div id="error"/>
+    <script src="https://cdn.botframework.com/botframework-webchat/0.14.2/botchat.js"></script>
+    <script src="https://cdn.botframework.com/botframework-webchat/0.14.2/CognitiveServices.js"></script>
+</body>
+</html>
+

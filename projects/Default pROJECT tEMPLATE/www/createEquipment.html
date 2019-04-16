@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>WOST - Create Equipment</title>
+    <script type="text/javascript" src="JSBridge8.2.js"></script>
+    <script type="text/javascript" src="f1util.js"></script>
+    <script>
+
+window.onload = function() {
+	f1util.log("MISC.066 - 8");
+	createEquipment.init();
+}
+
+var createEquipment = {
+    enabled: true,
+    workOrderId: null,
+    serviceAccount: null,
+    WOSTId: null,
+    customerEquipmentField: null,
+    newCE: null,
+    init: function() {
+        f1util.log("init");
+
+        MobileCRM.UI.EntityForm.requestObject(
+            function (entityForm) {
+                var entity = entityForm.entity;
+                var form = entityForm.form;
+                var props = entity.properties;
+
+                createEquipment.workOrderId = props.msdyn_workorder.id;
+                createEquipment.customerEquipmentField = props.msdyn_customerasset;
+                createEquipment.WOSTId =  props.msdyn_workorderservicetaskid;
+
+                f1util.log("WO Id: " + createEquipment.workOrderId);
+                f1util.log("WOST Id: " + createEquipment.WOSTId);
+
+                if (createEquipment.customerEquipmentField) {
+                    f1util.log("disable");
+                    createEquipment.enabled = false;
+                } else {
+                    createEquipment.enabled = true;
+                    f1util.log("enable");
+                }
+
+                var WOentity = new MobileCRM.FetchXml.Entity("msdyn_workorder");
+                WOentity.addAttribute("msdyn_serviceaccount");
+                WOentity.addAttribute("msdyn_workorderid");
+                WOentity.addAttribute("msdyn_name");
+                var filter = new MobileCRM.FetchXml.Filter();
+                filter.where("msdyn_workorderid", "eq", createEquipment.workOrderId);
+                WOentity.filter = filter;
+                var WOfetch = new MobileCRM.FetchXml.Fetch(WOentity);
+                f1util.log("query:");
+                WOfetch.execute("JSON", function (res) {
+                    f1util.log("WO fetch result: " + res.length);
+                    if (res.length == 1) {
+                        f1util.log("got svc account");
+                        var svc = res[0].msdyn_serviceaccount;
+                        createEquipment.serviceAccount = svc;
+                        f1util.log(f1util.dump(svc));
+
+                    }
+                }, function (err) { f1util.log("error: " + err); }, null);
+            },
+            function (err) {
+                f1util.log('An error occurred: ' + err);
+            }, null);
+
+        MobileCRM.UI.EntityForm.onChange(function (entityForm) {
+            createEquipment.onChange(entityForm);
+        }, true, null);
+
+        MobileCRM.UI.EntityForm.onSave(function (entityForm) {
+            createEquipment.onSave(entityForm);
+        }, true, null);
+    },
+    onSave: function(entityForm) {
+        f1util.log("on save");
+
+        var entity = entityForm.entity;
+        var form = entityForm.form;
+        var props = entity.properties;
+
+        var equipmentView = entityForm.getDetailView("New Equipment");
+
+        // TFS 13731 - if Form Requirement contains data then Customer Equipment should not be mandatory for this(Add Attachment) WOST
+        if (props.utc_formrequirement) {
+            f1util.log("This is Add Attachment WOST.");
+            return;
+        }
+
+        
+        if (props.msdyn_customerasset) {
+            f1util.log("A Customer Equipment record has been specified.");
+            return;
+        }
+       
+        f1util.log("saveHandler");
+        var saveHandler = entityForm.suspendSave();
+
+        var setName = equipmentView.getItemByName("utc_equipmentname").value; //text
+        var setProduct = equipmentView.getItemByName("utc_equipmentproduct"); //lookup;
+        var setQuantity = equipmentView.getItemByName("utc_equipmentquantity").value;//whole number
+        var setTag = equipmentView.getItemByName("utc_equipmenttag").value;//text
+        var setDate = equipmentView.getItemByName("utc_equipmentdateoflastpressuretest").value;//date and time
+        var setLocation = equipmentView.getItemByName("utc_equipmentlocation").value;//text
+        var setAggressive = equipmentView.getItemByName("utc_equipmentinaggressiveenvironment").value;//two options
+
+        if (!setName || !setProduct || !setQuantity || !setTag || !setDate || !setLocation) {
+            f1util.log("All Equipment fields are required");
+            saveHandler.resumeSave("All Equipment fields are required");
+            return;
+        }
+
+        MobileCRM.DynamicEntity.loadById(
+            "product",
+            setProduct.value.id,
+            function (result) {
+                f1util.log("loadById");
+                f1util.log(f1util.dump(result));
+
+                var newCE = MobileCRM.DynamicEntity.createNew("msdyn_customerasset");
+                var newprops = newCE.properties;
+
+                newprops.msdyn_name = setName;
+                newprops.msdyn_product = result;
+                newprops.utc_quantity = setQuantity;
+                newprops.utc_tag = setTag;
+                newprops.utc_dateoflastpressuretest = setDate;
+                newprops.utc_equipmentlocation = setLocation;
+                newprops.utc_aggressiveenvironment = setAggressive;
+                newprops.msdyn_account = createEquipment.serviceAccount;
+
+                newprops.utc_createdviamobileapp = true;
+                newprops.utc_createdviamobileappon = new Date();
+
+                f1util.log("New CE Record Data:");
+                f1util.log(f1util.dump(newCE));
+
+
+                newCE.save(function (error) {
+                    if (error) {
+                        saveHandler.resumeSave("Error during save: " + error);
+                    } else {
+                        f1util.log("Successfully created the Customer Equipment record.");
+                        f1util.log(f1util.dump(this));
+
+                        createEquipment.newCE = this;
+
+                        var CERef = new MobileCRM.Reference("msdyn_customerasset", this.id, this.primaryName);
+                        saveHandler.resumeSave(); // TFS 13796 - First Save Wost, then set CustomerEquipment lookup on Wost 
+                        createEquipment.SetCustomerEquipment(CERef);
+                        
+                    }
+                });
+            },
+            function (error) {
+                f1util.log("An error occurred: " + error);
+            },
+            null
+        );
+    },
+
+    SetCustomerEquipment: function(ref) {
+        f1util.log("SetCustomerEquipment");
+        MobileCRM.UI.EntityForm.requestObject(
+            function (entityForm) {
+                var entity = entityForm.entity;
+                var form = entityForm.form;
+                var props = entity.properties;
+
+                props.msdyn_customerasset = ref;
+
+            },
+            function (err) {
+                f1util.log('SetCustomerEquipment error occurred: ' + err);
+            }, null);
+    },
+
+    onChange: function(entityForm) {
+    }
+}
+    </script>
+</head>
+<body>
+</body>
+</html>
