@@ -1,0 +1,54 @@
+Unhandled exception: 
+Exception type: System.ServiceModel.FaultException`1[Microsoft.Xrm.Sdk.OrganizationServiceFault]
+Message: System.Web.HttpUnhandledException (0x80004005): Exception of type 'System.Web.HttpUnhandledException' was thrown. ---> Microsoft.Crm.CrmException: The Attribute(28a06d4f-bb5a-e911-a97a-000d3a33eeed) component cannot be deleted because it is referenced by 1 other components. For a list of referenced components, use the RetrieveDependenciesForDeleteRequest.
+   at Microsoft.Crm.Dialogs.DeleteDialogPage.ProcessCrmException(CrmException crmEx)
+   at Microsoft.Crm.Dialogs.DeleteDialogPage.ConfigureForm()
+   at Microsoft.Crm.Application.Controls.AppUIPage.OnPreRender(EventArgs e)
+   at Microsoft.Crm.Application.Controls.AppPage.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously): Microsoft Dynamics CRM has experienced an error. Reference number for administrators or support: #D39FD969Detail: 
+<OrganizationServiceFault xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/xrm/2011/Contracts">
+  <ActivityId>43882a6e-c65f-4ba2-855d-fae5e2431b55</ActivityId>
+  <ErrorCode>-2147220970</ErrorCode>
+  <ErrorDetails xmlns:d2p1="http://schemas.datacontract.org/2004/07/System.Collections.Generic" />
+  <Message>System.Web.HttpUnhandledException (0x80004005): Exception of type 'System.Web.HttpUnhandledException' was thrown. ---&gt; Microsoft.Crm.CrmException: The Attribute(28a06d4f-bb5a-e911-a97a-000d3a33eeed) component cannot be deleted because it is referenced by 1 other components. For a list of referenced components, use the RetrieveDependenciesForDeleteRequest.
+   at Microsoft.Crm.Dialogs.DeleteDialogPage.ProcessCrmException(CrmException crmEx)
+   at Microsoft.Crm.Dialogs.DeleteDialogPage.ConfigureForm()
+   at Microsoft.Crm.Application.Controls.AppUIPage.OnPreRender(EventArgs e)
+   at Microsoft.Crm.Application.Controls.AppPage.OnPreRender(EventArgs e)
+   at System.Web.UI.Control.PreRenderRecursiveInternal()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously): Microsoft Dynamics CRM has experienced an error. Reference number for administrators or support: #D39FD969</Message>
+  <Timestamp>2019-04-09T12:20:14.6147627Z</Timestamp>
+  <ExceptionRetriable>false</ExceptionRetriable>
+  <ExceptionSource i:nil="true" />
+  <InnerFault>
+    <ActivityId>43882a6e-c65f-4ba2-855d-fae5e2431b55</ActivityId>
+    <ErrorCode>-2147160033</ErrorCode>
+    <ErrorDetails xmlns:d3p1="http://schemas.datacontract.org/2004/07/System.Collections.Generic" />
+    <Message>The Attribute(28a06d4f-bb5a-e911-a97a-000d3a33eeed) component cannot be deleted because it is referenced by 1 other components. For a list of referenced components, use the RetrieveDependenciesForDeleteRequest.</Message>
+    <Timestamp>2019-04-09T12:20:14.6147627Z</Timestamp>
+    <ExceptionRetriable>false</ExceptionRetriable>
+    <ExceptionSource i:nil="true" />
+    <InnerFault i:nil="true" />
+    <OriginalException i:nil="true" />
+    <TraceText i:nil="true" />
+  </InnerFault>
+  <OriginalException i:nil="true" />
+  <TraceText i:nil="true" />
+</OrganizationServiceFault>
