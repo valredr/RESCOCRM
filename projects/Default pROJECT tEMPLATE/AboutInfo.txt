@@ -1,0 +1,7 @@
+Manufacturer=Microsoft Corporation
+ProductTitle=Field Service Mobile
+ProductSubTitle=
+PoweredBy=Powered by Resco.Net
+Icon=Logo.Logo.png
+Website=https://dynamics.microsoft.com/
+SupportEmail=

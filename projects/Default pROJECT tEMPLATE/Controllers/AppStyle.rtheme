@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ThemeItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="2">
+  <colors name="FormBackground" color="PAL: 11" />
+  <colors name="FormItemBackground" color="PAL: 1" />
+  <colors name="FormItemButton" color="PAL: 4" />
+  <colors name="FormItemDisabled" color="PAL: 6" />
+  <colors name="FormItemForeground" color="PAL: 2" />
+  <colors name="FormItemLabelForeground" color="PAL: 2" />
+  <colors name="FormItemLink" color="PAL: 5" />
+  <colors name="FormItemSeparator" color="PAL: 3" />
+  <colors name="GridBackground" color="PAL: 1" />
+  <colors name="GridBorder" color="PAL: 3" />
+  <colors name="ListBackground" color="PAL: 1" />
+  <colors name="ListForeground" color="PAL: 4" />
+  <colors name="ListHeaderBackground" color="PAL: 4" />
+  <colors name="ListHeaderForeground" color="PAL: 1" />
+  <colors name="ListSelBackground" color="PAL: 3" />
+  <colors name="ListSelForeground" color="PAL: 0" />
+  <colors name="ListSeparator" color="PAL: 3" />
+  <colors name="SearchBackground" color="PAL: 10" />
+  <colors name="SearchForeground" color="PAL: 4" />
+  <colors name="SearchSelForeground" color="PAL: 2" />
+  <colors name="TabBackground" color="PAL: 7" />
+  <colors name="TabForeground" color="PAL: 8" />
+  <colors name="TabSelForeground" color="PAL: 4" />
+  <colors name="TitleBackground" color="PAL: 0" />
+  <colors name="TitleForeground" color="PAL: 1" />
+  <palette>4278198352</palette>
+  <palette>4294506486</palette>
+  <palette>4278190080</palette>
+  <palette>4292401368</palette>
+  <palette>4281545523</palette>
+  <palette>4278475161</palette>
+  <palette>4284900966</palette>
+  <palette>4294177779</palette>
+  <palette>4287795858</palette>
+  <palette>0</palette>
+  <palette>4293059298</palette>
+  <palette>4293848814</palette>
+</ThemeItem>
